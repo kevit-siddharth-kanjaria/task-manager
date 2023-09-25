@@ -1,5 +1,7 @@
+//import dependencies
 const mongoose = require('mongoose')
 
+//create "Task" model using mongoose
 const Task = mongoose.model('Task',{
     description:{ 
         type : String,
@@ -12,4 +14,5 @@ const Task = mongoose.model('Task',{
     }
 })
 
+//export "Task" model
 module.exports = Task

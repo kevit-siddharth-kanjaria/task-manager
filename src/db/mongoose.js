@@ -1,4 +1,5 @@
+//import dependencies
 const mongoose = require('mongoose')
-mongoose.connect('mongodb://127.0.0.1:27017/task-manager-api')
 
-//mongoose setup
+//connect to db using mongoose
+mongoose.connect('mongodb://127.0.0.1:27017/task-manager-api')

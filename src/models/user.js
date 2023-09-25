@@ -1,6 +1,8 @@
+//import dependencies
 const mongoose = require('mongoose')
 const validator = require('validator')
 
+//create "User" model using mongoose
 const User = mongoose.model('User',{
     name:{ 
         type : String,
@@ -39,4 +41,5 @@ const User = mongoose.model('User',{
     }
 })
 
+//export "User" model
 module.exports = User
