@@ -52,6 +52,22 @@ app.get('/users/:id', async (req,res)=>{
     }
 })
 
+//update user by id
+app.patch('/users/:id', async (req,res)=>{
+    const _id = req.params.id
+    const update = req.body
+    try {
+        const user = await User.findByIdAndUpdate(_id,update)
+        if (!user) {
+            return res.status(404).send()
+        } else {
+            res.send(user);
+        }
+    } catch (error) {
+        res.status(500).send(error);
+    }
+})
+
 //create new task
 app.post('/tasks', async (req,res)=>{
     
@@ -81,6 +97,22 @@ app.get('/tasks/:id', async (req,res)=>{
     const _id = req.params.id
     try {
         const task = await Task.findById(_id)
+        if (!task) {
+            return res.status(404).send()
+        } else {
+            res.send(task);
+        }
+    } catch (error) {
+        res.status(500).send(error);
+    }
+})
+
+//update task by id
+app.patch('/tasks/:id', async (req,res)=>{
+    const _id = req.params.id
+    const update = req.body
+    try {
+        const task = await Task.findByIdAndUpdate(_id,update)
         if (!task) {
             return res.status(404).send()
         } else {
