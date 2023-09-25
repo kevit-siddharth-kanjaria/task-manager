@@ -37,7 +37,7 @@ app.get('/users', async (req,res)=>{
     }
 })
 
-//read users by id
+//read user by id
 app.get('/users/:id', async (req,res)=>{
     const _id = req.params.id
     try {
@@ -73,6 +73,21 @@ app.patch('/users/:id', async (req,res)=>{
         }
     } catch (error) {
         res.status(400).send(error);
+    }
+})
+
+//delete user by id
+app.delete('/users/:id', async (req,res)=>{
+    const _id = req.params.id
+    try {
+        const user = await User.findByIdAndDelete(_id)
+        if (!user) {
+            return res.status(404).send()
+        } else {
+            res.send(user);
+        }
+    } catch (error) {
+        res.status(500).send(error);
     }
 })
 
@@ -129,6 +144,21 @@ app.patch('/tasks/:id', async (req,res)=>{
     
     try {
         const task = await Task.findByIdAndUpdate(_id,update,{new:true,runValidators:true})
+        if (!task) {
+            return res.status(404).send()
+        } else {
+            res.send(task);
+        }
+    } catch (error) {
+        res.status(500).send(error);
+    }
+})
+
+//delete task by id 
+app.delete('/tasks/:id', async (req,res)=>{
+    const _id = req.params.id
+    try {
+        const task = await Task.findByIdAndDelete(_id)
         if (!task) {
             return res.status(404).send()
         } else {
