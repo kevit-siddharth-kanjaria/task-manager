@@ -14,7 +14,7 @@ app.post('/users', async (req,res)=>{
 
     try {
         const newUser = await user.save()
-        res.send(newUser);
+        res.status(201).send(newUser);
     } catch (error) {
         res.status(400).send(error);
     }
@@ -27,7 +27,7 @@ app.post('/tasks', async (req,res)=>{
 
     try {
         const newTask = await task.save()
-        res.send(newTask);
+        res.status(201).send(newTask);
     } catch (error) {
         res.status(400).send(error);
     }
