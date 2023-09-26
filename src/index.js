@@ -10,6 +10,19 @@ const app = express()
 //define port for app
 const port = process.env.PORT || 3000
 
+//setup logger
+let reqs = 0;
+app.use((req,res,next)=>{
+    console.log(reqs,req.method,req.path);
+    reqs++
+    next()
+})
+
+//maintanence middleware
+// app.use((req,res,next)=>{
+//         res.status(503).send('site under maintainance')    
+// })
+
 //initialize express app
 app.use(express.json())
 
@@ -19,5 +32,5 @@ app.use(taskRouter)
 
 //run task-manager app
 app.listen(port,()=>{
-    console.log("server is active on port "+port);
+    console.log("Server is active on port "+port);
 })

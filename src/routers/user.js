@@ -1,6 +1,7 @@
 //import dependencies
 const express = require('express')
 const User = require('../models/user')
+const auth = require('../middleware/auth')
 const router = new express.Router()
 
 // create user
@@ -28,15 +29,9 @@ router.post('/users/login', async (req,res)=>{
     }
 })
 
-//read all users
-router.get('/users', async (req,res)=>{
-    
-    try {
-        const users = await User.find({})
-        res.send(users);
-    } catch (error) {
-        res.status(500).send(error);
-    }
+//read user profile
+router.get('/users/me', auth, async (req,res)=>{
+    res.send(req.user)
 })
 
 //read user by id
