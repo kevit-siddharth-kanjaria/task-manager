@@ -50,12 +50,22 @@ const userSchema = mongoose.Schema({
     }]
 })
 
+//generate auth token
 userSchema.methods.generateAuthToken = async function(){
     const user = this
     const token = jwt.sign({_id: user._id.toString()}, 'taskmanager')
     user.tokens = user.tokens.concat({token})
     await user.save()
     return token
+}
+
+//user details abstraction (hide password and auth tokens)
+userSchema.methods.toJSON = function(){
+    const user = this
+    const userObject = user.toObject()
+    delete userObject.password
+    delete userObject.tokens
+    return userObject
 }
 
 //user authentication
