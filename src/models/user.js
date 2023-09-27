@@ -3,6 +3,7 @@ const mongoose = require('mongoose')
 const validator = require('validator')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
+const Task = require('../models/task')
 
 //create user model schema
 const userSchema = mongoose.Schema({
@@ -81,7 +82,7 @@ userSchema.statics.findUserByCredentials= async (email,password)=>{
     return user
 }
 
-//password hashing middleware
+//using "save" middleware for password hashing
 userSchema.pre('save', async function(next){
     const user = this
 
@@ -89,6 +90,26 @@ userSchema.pre('save', async function(next){
         user.password = await bcrypt.hash(user.password, 8)
     }
     
+    next()
+})
+
+//establish user-task relationship (this is not utilized in any functionality here)
+userSchema.virtual('tasks',{
+    ref:'Task',
+    localField:'_id',
+    foreignField:'owner'
+})
+
+/*
+the method "findByIdAndDelete" doesnt have middleware of the same name, and triggers "findOneAndDelete" middleware
+using "findOneAndDelete" middleware, 
+use getQuery() as shown in ->(https://stackoverflow.com/questions/58564087/how-get-document-on-mongoose-findoneanddelete-middleware-using-typescript) 
+to get the actuall user id cause "this" is a query here
+*/
+userSchema.pre('findOneAndDelete',{model:false,query:true},async function(next){
+    const userId = this.getQuery()._id
+    await Task.deleteMany({owner: userId})
+    console.log("pre");
     next()
 })
 

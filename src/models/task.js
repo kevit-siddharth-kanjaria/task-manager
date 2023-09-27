@@ -1,5 +1,6 @@
 //import dependencies
 const mongoose = require('mongoose')
+const User = require('./user')
 
 //create "Task" model using mongoose
 const Task = mongoose.model('Task',{
@@ -11,6 +12,11 @@ const Task = mongoose.model('Task',{
     completed:{ 
         type : Boolean,
         default:false
+    },
+    owner:{
+        type:mongoose.Schema.Types.ObjectId,
+        required:true,
+        ref :'User'
     }
 })
 

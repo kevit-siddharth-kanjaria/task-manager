@@ -81,7 +81,6 @@ router.patch('/users/me', auth, async (req,res)=>{
 
 //delete user by id
 router.delete('/users/me', auth, async (req,res)=>{
-
     try {
         await User.findByIdAndDelete(req.user._id)
         res.send(req.user)
@@ -90,5 +89,5 @@ router.delete('/users/me', auth, async (req,res)=>{
     }
 })
 
-//export router
+//export user router
 module.exports = router
