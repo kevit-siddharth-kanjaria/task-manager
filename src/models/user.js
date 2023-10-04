@@ -49,7 +49,10 @@ const userSchema = mongoose.Schema({
             required:true
         }
     }]
-})
+},{
+    timestamps:true
+}
+)
 
 //generate auth token
 userSchema.methods.generateAuthToken = async function(){
