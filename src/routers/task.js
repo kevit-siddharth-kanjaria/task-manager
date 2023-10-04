@@ -42,7 +42,7 @@ router.get('/tasks', auth, async (req, res) => {
             }
         })
         res.send(req.user.tasks);
-    } catch (error) {
+    } catch (error) {   
         res.status(500).send(error);
     }
 })
