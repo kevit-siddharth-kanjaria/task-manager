@@ -116,7 +116,6 @@ to get the actuall user id cause "this" is a query here
 userSchema.pre('findOneAndDelete',{model:false,query:true},async function(next){
     const userId = this.getQuery()._id
     await Task.deleteMany({owner: userId})
-    console.log("pre");
     next()
 })
 
